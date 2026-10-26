@@ -1,0 +1,70 @@
+[
+  {
+    "id": "P001",
+    "family": "conflicting_requirements",
+    "prompt": "Answer in valid JSON with one sentence and no markdown.",
+    "response": "```json\n{\"answer\":\"Approved.\"}\n```",
+    "checks": [
+      {
+        "type": "json_only"
+      }
+    ],
+    "analysis": "Code fences violate a strict JSON-only contract."
+  },
+  {
+    "id": "P002",
+    "family": "changing_constraints",
+    "prompt": "User updates earlier request: exclude all customer names.",
+    "response": "The summary excludes customer names.",
+    "checks": [
+      {
+        "type": "must_not_include",
+        "value": "Alice"
+      }
+    ],
+    "analysis": "A simple lexical check is insufficient for complete privacy validation."
+  },
+  {
+    "id": "P003",
+    "family": "format_constraints",
+    "prompt": "Respond in 15 words or fewer and mention delivery.",
+    "response": "The delivery is delayed by two days.",
+    "checks": [
+      {
+        "type": "max_words",
+        "value": 15
+      },
+      {
+        "type": "must_include",
+        "value": "delivery"
+      }
+    ],
+    "analysis": "Basic deterministic checks can confirm explicit lexical requirements."
+  },
+  {
+    "id": "P004",
+    "family": "boundary_cases",
+    "prompt": "Do not claim a refund was issued.",
+    "response": "A refund was issued yesterday.",
+    "checks": [
+      {
+        "type": "must_not_include",
+        "value": "refund was issued"
+      }
+    ],
+    "analysis": "A negative requirement should override generic helpfulness."
+  },
+  {
+    "id": "P005",
+    "family": "multi_turn",
+    "prompt": "Previous user wanted English. Current user now asks for a French greeting.",
+    "response": "Bonjour !",
+    "checks": [
+      {
+        "type": "must_include",
+        "value": "Bonjour"
+      }
+    ],
+    "analysis": "Recency of legitimate user constraints matters; lexical tests only provide a proxy."
+  }
+]
